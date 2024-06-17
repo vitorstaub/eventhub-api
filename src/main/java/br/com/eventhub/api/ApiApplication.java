@@ -1,4 +1,4 @@
-package br.com.eventos.api;
+package br.com.eventhub.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

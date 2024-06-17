@@ -1,6 +1,6 @@
-package br.com.eventos.api.domain.address;
+package br.com.eventhub.api.domain.address;
 
-import br.com.eventos.api.domain.event.Event;
+import br.com.eventhub.api.domain.event.Event;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

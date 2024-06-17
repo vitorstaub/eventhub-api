@@ -1,9 +1,9 @@
-package br.com.eventos.api.service;
+package br.com.eventhub.api.service;
 
-import br.com.eventos.api.domain.event.Event;
+import br.com.eventhub.api.repositories.EventRepository;
+import br.com.eventhub.api.domain.event.Event;
+import br.com.eventhub.api.domain.event.EventRequestDTO;
 
-import br.com.eventos.api.domain.event.EventRequestDTO;
-import br.com.eventos.api.repositories.EventRepository;
 import com.amazonaws.services.s3.AmazonS3;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;

@@ -1,6 +1,6 @@
-package br.com.eventos.api.repositories;
+package br.com.eventhub.api.repositories;
 
-import br.com.eventos.api.domain.address.Address;
+import br.com.eventhub.api.domain.address.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

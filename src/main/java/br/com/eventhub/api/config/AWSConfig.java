@@ -1,4 +1,4 @@
-package br.com.eventos.api.config;
+package br.com.eventhub.api.config;
 
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;

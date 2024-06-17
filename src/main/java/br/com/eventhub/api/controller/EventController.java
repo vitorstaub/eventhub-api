@@ -1,8 +1,9 @@
-package br.com.eventos.api.controller;
+package br.com.eventhub.api.controller;
 
-import br.com.eventos.api.domain.event.Event;
-import br.com.eventos.api.domain.event.EventRequestDTO;
-import br.com.eventos.api.service.EventService;
+import br.com.eventhub.api.domain.event.Event;
+import br.com.eventhub.api.domain.event.EventRequestDTO;
+import br.com.eventhub.api.service.EventService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

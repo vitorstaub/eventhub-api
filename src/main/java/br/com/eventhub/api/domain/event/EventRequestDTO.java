@@ -1,4 +1,4 @@
-package br.com.eventos.api.domain.event;
+package br.com.eventhub.api.domain.event;
 
 import org.springframework.web.multipart.MultipartFile;
 

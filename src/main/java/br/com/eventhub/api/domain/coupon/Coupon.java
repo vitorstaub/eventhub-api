@@ -1,6 +1,6 @@
-package br.com.eventos.api.domain.coupon;
+package br.com.eventhub.api.domain.coupon;
 
-import br.com.eventos.api.domain.event.Event;
+import br.com.eventhub.api.domain.event.Event;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
