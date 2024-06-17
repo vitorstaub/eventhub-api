@@ -31,6 +31,9 @@ public class EventService {
     private AmazonS3 s3Client;
 
     @Autowired
+    private AddressService addressService;
+
+    @Autowired
     private EventRepository repository;
 
     public Event createEvent(EventRequestDTO data) {
@@ -49,6 +52,10 @@ public class EventService {
         newEvent.setRemote(data.remote());
 
         repository.save(newEvent);
+
+        if (!data.remote()) {
+            this.addressService.createAddress(data, newEvent);
+        }
 
         return newEvent;
     }
