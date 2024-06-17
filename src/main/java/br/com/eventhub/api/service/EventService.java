@@ -1,5 +1,6 @@
 package br.com.eventhub.api.service;
 
+import br.com.eventhub.api.domain.event.EventResponseDTO;
 import br.com.eventhub.api.repositories.EventRepository;
 import br.com.eventhub.api.domain.event.Event;
 import br.com.eventhub.api.domain.event.EventRequestDTO;
@@ -7,6 +8,9 @@ import br.com.eventhub.api.domain.event.EventRequestDTO;
 import com.amazonaws.services.s3.AmazonS3;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -46,6 +51,13 @@ public class EventService {
         repository.save(newEvent);
 
         return newEvent;
+    }
+
+    public List<EventResponseDTO> getUpcomingEvents(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Event> eventsPage = this.repository.findUpcomingEvents(new Date(), pageable);
+        return eventsPage.map(e -> new EventResponseDTO(e.getId(), e.getTitle(), e.getDescription(), e.getDate(), "", "", e.getRemote(), e.getEventUrl(), e.getImgUrl()))
+                .stream().toList();
     }
 
     private String uploadImg(MultipartFile multipartFile) {
