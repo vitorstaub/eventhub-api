@@ -2,12 +2,15 @@ package br.com.eventhub.api.controller;
 
 import br.com.eventhub.api.domain.event.Event;
 import br.com.eventhub.api.domain.event.EventRequestDTO;
+import br.com.eventhub.api.domain.event.EventResponseDTO;
 import br.com.eventhub.api.service.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/event")
@@ -29,5 +32,11 @@ public class EventController {
         Event newEvent = this.eventService.createEvent(eventRequestDTO);
 
         return ResponseEntity.ok(newEvent);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EventResponseDTO>> getEvents(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        List<EventResponseDTO> allEvents = this.eventService.getUpcomingEvents(page, size);
+        return ResponseEntity.ok(allEvents);
     }
 }
