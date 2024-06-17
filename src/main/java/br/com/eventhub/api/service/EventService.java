@@ -1,5 +1,7 @@
 package br.com.eventhub.api.service;
 
+import br.com.eventhub.api.domain.coupon.Coupon;
+import br.com.eventhub.api.domain.event.EventDetailsDTO;
 import br.com.eventhub.api.domain.event.EventResponseDTO;
 import br.com.eventhub.api.repositories.EventRepository;
 import br.com.eventhub.api.domain.event.Event;
@@ -21,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -32,6 +35,9 @@ public class EventService {
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private CouponService couponService;
 
     @Autowired
     private EventRepository repository;
@@ -63,8 +69,43 @@ public class EventService {
     public List<EventResponseDTO> getUpcomingEvents(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Event> eventsPage = this.repository.findUpcomingEvents(new Date(), pageable);
-        return eventsPage.map(e -> new EventResponseDTO(e.getId(), e.getTitle(), e.getDescription(), e.getDate(), "", "", e.getRemote(), e.getEventUrl(), e.getImgUrl()))
+        return eventsPage.map(e -> new EventResponseDTO(
+                        e.getId(),
+                        e.getTitle(),
+                        e.getDescription(),
+                        e.getDate(),
+                        e.getAddress() != null ? e.getAddress().getCity() : "",
+                        e.getAddress() != null ? e.getAddress().getUf() : "",
+                        e.getRemote(),
+                        e.getEventUrl(),
+                        e.getImgUrl()))
                 .stream().toList();
+    }
+
+    public EventDetailsDTO getEventDetails(UUID eventId) {
+        Event event = repository.findById(eventId)
+                .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+
+        List<Coupon> coupons = couponService.consultCoupons(eventId, new Date());
+
+        List<EventDetailsDTO.CouponDTO> couponDTOs = coupons.stream()
+                .map(c -> new EventDetailsDTO.CouponDTO(
+                        c.getCode(),
+                        c.getDiscount(),
+                        c.getValid()))
+                .collect(Collectors.toList());
+
+        return new EventDetailsDTO(
+                event.getId(),
+                event.getTitle(),
+                event.getDescription(),
+                event.getDate(),
+                event.getAddress() != null ? event.getAddress().getCity() : "",
+                event.getAddress() != null ? event.getAddress().getUf() : "",
+                event.getImgUrl(),
+                event.getEventUrl(),
+                couponDTOs
+        );
     }
 
     private String uploadImg(MultipartFile multipartFile) {
@@ -76,7 +117,7 @@ public class EventService {
             file.delete();
             return s3Client.getUrl(bucketName, fileName).toString();
         } catch (Exception e) {
-            System.out.println("erro ao subir arquivo!");
+            System.out.println("Error to upload file");
             return null;
         }
     }
