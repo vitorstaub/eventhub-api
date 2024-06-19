@@ -20,26 +20,27 @@ EventsHub
 <h2 id="started">About</h2>
 This project is an API built using Java, Java Spring, Flyway Migrations, PostgresSQL as the database.
 
-The API emulates the functionality of an event web application similar to ![UberHub](https://app.uberhub.com.br/eventos/). Users can create and view registered events. The API has been deployed on AWS utilizing an EC2 instance, an RDS PostgreSQL database, and an S3 bucket.
+The API emulates the functionality of an event web application similar to [UberHub](https://app.uberhub.com.br/eventos/). Users can create and view registered events. The API has been deployed on AWS utilizing an EC2 instance, a RDS PostgreSQL database, and an S3 bucket.
 
 <h2 id="started">Getting started</h2>
 
 <h3>Prerequisites</h3>
+
 - Cloning de repository
 
 ```bash
 git clone https://github.com/vitorstaub/eventshub-api.git
 ```
 - Install dependencies with Maven
-- Install ![PostgreSQL](https://www.postgresql.org/)
-- Install ![AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- Install [PostgreSQL](https://www.postgresql.org/)
+- Install [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 
 
 
 <h3>Authentication and access credentials - AWS</h3>
 
-- Configure the ![AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+- Configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
 
 <h3>Environment Variables</h2>
 
@@ -49,7 +50,7 @@ spring.datasource.url=${AWS_DB_URL:jdbc:postgresql://localhost:5432/postgres}
 spring.datasource.username=${AWS_DB_USER:vitorstaub}
 spring.datasource.password=${AWS_DB_PASSWORD:password}
 aws.region=us-east-1
-aws.bucket.name=eventos-imagens
+aws.bucket.name=${BUCKET_NAME}
 ```
 
 <h3>Starting</h3>
@@ -79,8 +80,11 @@ GET /api/event/{eventId} - Retrieve a specific event by ID.
 </p>
 
 <h3>S3 Bucket</h3>
-- Create ![S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html)
+
+- Create [S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html)
+
 - Add Bucket S3 public get policy:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -97,8 +101,9 @@ GET /api/event/{eventId} - Retrieve a specific event by ID.
 ```
 
 <h3>EC2 Instance</h3>
-- Create ![EC2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html)
-- Create ![VPC (Virtual Private Cloud)](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html)
+
+- Create [EC2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html)
+- Create [VPC (Virtual Private Cloud)](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html)
 - Create a public subnet that uses the latter half of the IP addresses in the VPC. 
 
 CIDR IPv4:
@@ -114,17 +119,19 @@ CIDR IPv4:
 ```
 
 <h3>RDS Database</h3>
-- Create a ![PostgreSQL Database](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html)
+
+- Create a [PostgreSQL Database](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html)
 - Add the database to the security group of the ECS instance 
 
 
 <h2>Contributing</h2>
+
 When contributing to this project, please follow the existing code style, [commit conventions](https://www.conventionalcommits.org/en/v1.0.0/), and submit your changes in a separate branch.
 
 <h2 id="references">References</h2>
 
-![AWS Docs](https://docs.aws.amazon.com/)
+[AWS Docs](https://docs.aws.amazon.com/)
 
-![Spring Docs](https://docs.spring.io/spring-boot/)
+[Spring Docs](https://docs.spring.io/spring-boot/)
 
-![Fernanda Kipper](https://www.youtube.com/watch?v=d0KaNzAMVO4)
+[Fernanda Kipper](https://www.youtube.com/watch?v=d0KaNzAMVO4)
